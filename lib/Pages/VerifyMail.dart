@@ -50,7 +50,7 @@ class _VerifyMailPageState extends State<VerifyMailPage> {
       await user.sendEmailVerification();
 
       setState(() => canResendEmail=false);
-      await Future.delayed(const Duration(seconds :5));
+      await Future.delayed(const Duration(seconds :30));
       setState(()=>canResendEmail= true);
     } catch (e) {
       // Utils.showSncakBar(e.toString());

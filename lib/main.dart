@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khalti_flutter/localization/khalti_localizations.dart';
 import 'package:projectfirst/Pages/Main_page.dart';
 import "package:firebase_core/firebase_core.dart";
 
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        KhaltiLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(

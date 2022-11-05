@@ -45,6 +45,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^20.3.49
   rating_bar: ^0.2.0
   url_launcher: ^6.1.6
+  khalti_flutter: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,7 @@ flutter:
      - Assets/Photos/Profile.png
      - Assets/Logo/nonotification.png
      - Assets/Logo/notification.png
+     - Assets/Logo/KhaltiLogo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

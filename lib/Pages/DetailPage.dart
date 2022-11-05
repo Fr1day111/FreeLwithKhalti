@@ -28,6 +28,11 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlueAccent,
+        elevation: 0.0,
+        //title: Text('Forgot Password'),
+      ),
         body: SingleChildScrollView(
             child: SafeArea(
                 child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -56,33 +61,49 @@ class _DetailPageState extends State<DetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                      fontSize: 50,
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.bold),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                        fontSize: 50,
+                        fontFamily: 'OpenSans',
+                        fontWeight: FontWeight.bold,
+                    color: Colors.lightBlueAccent),
+                  ),
                 ),
 
-                Text(
-                  type,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'OpenSans',
-                    color: Colors.grey
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    type,
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontFamily: 'OpenSans',
+                      color: Colors.grey
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
-                  width: 350,
+                const Text(
+                  'Descriptions:',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontFamily: 'OpenSans',
+                      color: Colors.lightBlueAccent
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
                   child: Text(
                     description,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 30,
                         fontFamily: 'OpenSans',
-                        color: Colors.grey),
+                        ),
                   ),
                 ),
                 const SizedBox(

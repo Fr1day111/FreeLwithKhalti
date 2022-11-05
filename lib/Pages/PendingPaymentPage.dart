@@ -38,8 +38,8 @@ class _PendingPaymentPageState extends State<PendingPaymentPage> {
             storedocs.add(a);
             a['id'] = document.id;
           }).toList();
-           print(storedocs);
-           print('*****************');
+          // print(storedocs);
+          // print('*****************');
           for (var i = 0; i < storedocs.length; i++) {
             FirebaseFirestore.instance
                 .collection("Posts")

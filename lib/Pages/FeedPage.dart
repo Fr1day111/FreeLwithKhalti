@@ -25,7 +25,7 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   final Stream<QuerySnapshot> postsStream =
-      FirebaseFirestore.instance.collection("Posts").orderBy('TimeStamp').snapshots();
+      FirebaseFirestore.instance.collection("Posts").orderBy('TimeStamp',descending: false).snapshots();
 
   @override
   Widget build(BuildContext context) {

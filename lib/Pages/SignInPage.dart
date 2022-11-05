@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:projectfirst/Pages/ForgetPassword.dart';
 import 'package:projectfirst/Pages/HomePage.dart';
 import 'package:projectfirst/Pages/Main_page.dart';
 
@@ -145,6 +146,37 @@ class _signinpageState extends State<signinpage> {
                       const SizedBox(
                         height: 10,
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24.0),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPassword()));
+                            },
+                            child: RichText(text: const TextSpan(
+                                text: "",
+                                style: TextStyle(fontFamily: 'OpenSans',
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: [
+                                  TextSpan(
+                                    text: 'Forget Password?',
+                                    style: TextStyle(
+                                      //fontStyle: FontStyle.italic,
+                                        fontFamily: 'OpenSans',
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.lightBlueAccent),
+
+                                  )
+                                ]
+                            )),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       GestureDetector(
                         onTap: () {
                           signIn();
@@ -185,6 +217,8 @@ class _signinpageState extends State<signinpage> {
                             )
                           ]
                       )),
+                      const    SizedBox(height: 12,),
+
 
                     ],
                   ),

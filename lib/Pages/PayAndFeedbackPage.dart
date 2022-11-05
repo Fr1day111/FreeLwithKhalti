@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projectfirst/Pages/HomePage.dart';
+import 'package:projectfirst/Payment/KhaltiScope.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -107,6 +108,7 @@ class _PayAndFeedbackPageState extends State<PayAndFeedbackPage> {
                           await launchUrl(url);
                         }
                         else{
+
                           showDialog<String>(
                               context: context,
                               builder:
@@ -138,23 +140,28 @@ class _PayAndFeedbackPageState extends State<PayAndFeedbackPage> {
                           fontWeight: FontWeight.bold
                         ),),
                     ),
-                    Card(
-                      elevation: 8,
-                      child: Container(
-                        //height: 70,
-                        width: double.infinity,
-                        color: Colors.lightBlueAccent,
-                        child: const ListTile(
-                          contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20.0),
-                          title: Text(
-                            'Paypal',
-                            style: TextStyle(
-                                fontFamily: 'OpenSans',
-                                fontWeight: FontWeight.bold),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>KhaltiPaymentApp(PhoneNo: userinfo[0]['PhoneNo'],Amt:amount ,)));
+                      },
+                      child: Card(
+                        elevation: 8,
+                        child: Container(
+                          //height: 70,
+                          width: double.infinity,
+                          color: Colors.lightBlueAccent,
+                          child: const ListTile(
+                            contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20.0),
+                            title: Text(
+                              'Khalti',
+                              style: TextStyle(
+                                  fontFamily: 'OpenSans',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            trailing: Icon(Icons.arrow_forward_ios),
+                            leading: ImageIcon(AssetImage('Assets/Logo/KhaltiLogo.png'),size: 35,),
                           ),
-                          trailing: Icon(Icons.arrow_forward_ios),
-                          leading: Icon(Icons.paypal_sharp),
                         ),
                       ),
                     ),
