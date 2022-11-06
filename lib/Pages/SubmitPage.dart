@@ -190,7 +190,7 @@ class _SubmitPageState extends State<SubmitPage> {
                                               'Status': 'Not Paid'
                                             }).then((value) {
                                              FirebaseFirestore.instance
-                                                  .collection('Users')
+                                                  .collection('FreeLancer')
                                                   .doc(auth.currentUser!.uid)
                                                   .collection('PendingJobs')
                                                   .doc(widget.jobid).delete().then((value) {

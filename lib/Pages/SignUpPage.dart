@@ -7,9 +7,9 @@ import 'package:projectfirst/Pages/Main_page.dart';
 import 'SignInPage.dart';
 
 class signuppage extends StatefulWidget {
-  final Function() onClickedSignIn;
+  //final Function() onClickedSignIn;
 
-  const signuppage({Key? key,required this.onClickedSignIn}) : super(key: key);
+  const signuppage({Key? key}) : super(key: key);
 
   @override
   State<signuppage> createState() => _signuppageState();
@@ -39,6 +39,11 @@ class _signuppageState extends State<signuppage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: Colors.lightBlueAccent,
+      //   elevation: 0.0,
+      //   //title: Text('Forgot Password'),
+      // ),
       //backgroundColor: Colors.lightBlue,
       body: SafeArea(
         child: Container(
@@ -50,7 +55,7 @@ class _signuppageState extends State<signuppage> {
             key: _signupform,
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(top: 110),
+                padding: const EdgeInsets.only(top: 70),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -79,9 +84,10 @@ class _signuppageState extends State<signuppage> {
                             const SizedBox(
                               height: 10,
                             ),
+                            Text('SignUp as Client',style: TextStyle(fontWeight: FontWeight.bold),),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 25, right: 25),
+                                  const EdgeInsets.only(left: 25, right: 25,top: 10),
                               child: TextFormField(
                                 controller: _UserNameController,
                                 validator: (value) {
@@ -257,10 +263,7 @@ class _signuppageState extends State<signuppage> {
                                       'Email': _EmailController.text.trim(),
                                       'PhoneNo': _PhoneNoController.text.trim(),
                                       'pfpUrl':" ",
-                                      'cvUrl' : " ",
                                       'Bio' : ' ',
-                                      'Finished':'0',
-                                      'Rating':'5'
                                     }).onError((error, stackTrace) {
                                       showDialog<String>(
                                           context: context,
@@ -317,24 +320,6 @@ class _signuppageState extends State<signuppage> {
                               ),
                             ),
                             const SizedBox(height:10),
-                            RichText(text: TextSpan(
-                              text: 'Already Have an account? ',
-                              style: const TextStyle(fontFamily: 'OpenSans',color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                              children: [
-                                TextSpan(
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap=widget.onClickedSignIn,
-                                  text: 'Log In',
-                                  style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                      fontFamily: 'OpenSans',
-                                      fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlueAccent),
-
-                                )
-                              ]
-                            )),
                             const SizedBox(height: 30)
                           ],
                         ),

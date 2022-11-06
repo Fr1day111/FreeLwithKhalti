@@ -13,7 +13,7 @@ class KhaltiPaymentApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KhaltiScope(
-        publicKey: "test_public_key_7c3e0857e34c4edcb0eedf702dcf5246",
+        publicKey: "test_public_key_290c2886374747dd8c12fb3f81f96fa2",
         builder: (context, navigatorKey) {
           return MaterialApp(
             navigatorKey: navigatorKey,

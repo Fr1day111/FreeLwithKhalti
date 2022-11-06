@@ -18,6 +18,7 @@ class _AddPageState extends State<AddPage> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController budgetController = TextEditingController();
+  final TextEditingController RequirementController = TextEditingController();
   CollectionReference Posts = FirebaseFirestore.instance.collection('Posts');
   final FirebaseAuth auth = FirebaseAuth.instance;
   String _chosenValue ='Mobile App';
@@ -136,6 +137,34 @@ class _AddPageState extends State<AddPage> {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 25, right: 25,top: 10),
+                          child: Center(
+                            child: TextFormField(
+                              controller: RequirementController,
+                              keyboardType: TextInputType.multiline,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'This field can\'t be empty';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.grey[200],
+                                label: const Text(
+                                  'Minimum Requirement for project',
+                                  style: TextStyle(fontFamily: 'OpenSans'),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                              minLines: 3,
+                              maxLines: 5,
+                            ),
+                          ),
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -219,6 +248,7 @@ class _AddPageState extends State<AddPage> {
                                 'Budget': budgetController.text.trim(),
                                 'Description':
                                     descriptionController.text.trim(),
+                                'Requirement':RequirementController.text,
                                 'Deadline': dateController.text.trim(),
                                 'Type':_chosenValue,
                                 'RequestStatus':'Waiting',
@@ -226,11 +256,28 @@ class _AddPageState extends State<AddPage> {
                                 'ProjectUrl':" ",
                                 'TimeStamp': Timestamp.now()
                               }).then((value) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const MainPage()),
-                                );
+                                showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                          title: const Text('Done'),
+                                          content: Text("Your Job Request has been posted\nWe will notify you once you have any request.."),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => const MainPage()),
+                                                );
+
+                                                },
+
+                                              child: const Text('OK'),
+                                            ),
+                                          ],
+                                        ));
+
                               }).onError((error, stackTrace) async {
                                 showDialog<String>(
                                     context: context,

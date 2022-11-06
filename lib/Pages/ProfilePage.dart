@@ -13,7 +13,8 @@ import 'package:rating_bar/rating_bar.dart';
 import 'PendingPaymentPage.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  final String UserType;
+  const ProfilePage({Key? key,required this.UserType}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -35,11 +36,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () {
                         auth.signOut();
                       },
-                      child: Text('Back')),
+                      child: const Text('Back')),
                 )
               : FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                   future: FirebaseFirestore.instance
-                      .collection('Users')
+                      .collection(widget.UserType.toString())
                       .doc(auth.currentUser?.uid)
                       .get(),
                   builder: (_, snapshot) {
@@ -56,7 +57,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     var bio = data['Bio'].toString();
                     var pfpUrl = data['pfpUrl'].toString();
                     var cvUrl = data['cvUrl'].toString();
-                    var rating = num.parse(data['Rating']).toDouble();
+                    var speciality=data['Speciality'].toString();
+                    var highedu=data['HighEdu'].toString();
+                    var Achievement=data['Achievement'].toString();
+                    var Training=data['Training'].toString();
                     return SafeArea(
                       child: Container(
                         child: Padding(
@@ -71,20 +75,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                           color: Colors.blueAccent,
                                           borderRadius:
                                               BorderRadius.circular(200),
-                                          image: DecorationImage(
+                                          image: const DecorationImage(
                                               fit: BoxFit.fill,
                                               image: AssetImage(
                                                   'Assets/Logo/logomain.png'))),
-                                      //  child: CircleAvatar(
-                                      //  radius: 80.0,
-                                      // backgroundColor: Colors.transparent,
-                                      //child: pfpUrl == " "
-                                      //  ? const ImageIcon(
-                                      //    AssetImage('Assets/Logo/logomain.png'),
-                                      //  size: 110,
-                                      // )
-                                      // : Image.network(pfpUrl),
-                                      //),
                                     )
                                   : Container(
                                       height: 150,
@@ -115,21 +109,38 @@ class _ProfilePageState extends State<ProfilePage> {
                                           fontFamily: 'OpenSans',
                                           color: Colors.grey),
                                     ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
-                              // RatingBar.readOnly(
-                              //   initialRating: rating,
-                              //   isHalfAllowed: true,
-                              //   halfFilledIcon: Icons.star_half,
-                              //   filledIcon: Icons.star,
-                              //   emptyIcon: Icons.star_border,
-                              //   size: 50,
-                              // ),
+                              if (widget.UserType=='FreeLancer') Column(
+                                children: [
+                                  const Text('Speciality:',style: TextStyle(
+                                      fontSize: 20, fontFamily: 'OpenSans'),),
+                                  //Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                  Text(speciality),
+                                  const Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                  const Text('Achievement:',style: TextStyle(
+                                      fontSize: 20, fontFamily: 'OpenSans'),),
+                                 // Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                  Text(Achievement),
+                                  const Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                  const Text('Highest Education:',style: TextStyle(
+                                      fontSize: 20, fontFamily: 'OpenSans'),),
+                                 // Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                  Text(highedu),
+                                  const Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                  const Text('Trainings:',style: TextStyle(
+                                      fontSize: 20, fontFamily: 'OpenSans'),),
+                                  // Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                  Text(Training),
+
+                                ],
+                              ) else Container(),
+
                               const SizedBox(
-                                height: 40,
+                                height: 20,
                               ),
-                              GestureDetector(
+                              widget.UserType=='FreeLancer'?GestureDetector(
                                 onTap: () {
                                   cvUrl != " "
                                       ? Navigator.push(
@@ -171,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              ):Container(),
                               // SizedBox(
                               // height: 5,
                               //),
@@ -181,7 +192,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const EditProfile()),
+                                             EditProfile(UserType: widget.UserType,)),
                                   );
                                 },
                                 child: Card(
@@ -205,7 +216,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                               ),
-                              GestureDetector(
+                              widget.UserType=='Users'?GestureDetector(
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -234,8 +245,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                 ),
-                              ),
-                              GestureDetector(
+                              ):Container(),
+                              widget.UserType=='FreeLancer'?GestureDetector(
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -264,8 +275,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                 ),
-                              ),
-                              GestureDetector(
+                              ):Container(),
+                              widget.UserType=='Users'?GestureDetector(
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -294,7 +305,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              ):Container(),
 
                               GestureDetector(
                                 onTap: () {
@@ -328,8 +339,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Text('Feedbacks:',
                                 style: TextStyle(
                                   fontSize: 20,
@@ -337,11 +348,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontFamily: 'OpenSans'
                                 ),),
                               ),
-                              Divider(color: Colors.black87,
+                              const Divider(color: Colors.black87,
                               thickness: 10,),
                               StreamBuilder<QuerySnapshot>(
                                   stream: FirebaseFirestore.instance
-                                      .collection('Users')
+                                      .collection('FreeLancer')
                                       .doc(auth.currentUser!.uid)
                                       .collection('Feedback')
                                       .snapshots(),
@@ -353,13 +364,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                       a['id'] = document.id;
                                       storedocs.add(a);
                                     }).toList();
-                                     // for (var i = 0; i < storedocs.length; i++) {
-                                       // sum=num.parse(storedocs[i]['Rating'].toString()).toDouble()+ sum;
-                                      //}
-                                      //double newrating=sum/(storedocs.length+1);
-                                        //FirebaseFirestore.instance.collection('Users').doc(auth.currentUser!.uid).update({
-                                          //'Rating':newrating.toString(),
-                                        //});
                                         for (var i = 0; i < storedocs.length; i++) {
                                       FirebaseFirestore.instance
                                           .collection("Users")
@@ -392,7 +396,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               padding: const EdgeInsets.all(8.0),
                                               child: Column(
                                                 children: [
-                                                  Text(userinfo[i]['UserName'],style: TextStyle(
+                                                  Text(userinfo[i]['UserName'],style: const TextStyle(
                                                     fontSize: 20,
                                                     fontFamily: 'OpenSans'
                                                   ),),
@@ -404,7 +408,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     emptyIcon: Icons.star_border,
                                                     size: 40,
                                                   ),
-                                                  Text(storedocs[i]['Feedback'],style: TextStyle(
+                                                  Text(storedocs[i]['Feedback'],style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15
                                                   ),)

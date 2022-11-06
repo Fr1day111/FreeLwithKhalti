@@ -24,7 +24,7 @@ class _VerifyMailPageState extends State<VerifyMailPage> {
       sendVerificationEmail();
 
       timer = Timer.periodic(
-        const Duration(seconds: 3),
+        const Duration(seconds: 30),
         (_) => checkEmailVerified(),
       );
     }

@@ -54,7 +54,7 @@ class _ManageRequestState extends State<ManageRequest> {
               });
 
               FirebaseFirestore.instance
-                  .collection("Users")
+                  .collection("FreeLancer")
                   .doc(userID)
                   .get()
                   .then((value) async {
@@ -145,7 +145,7 @@ class _ManageRequestState extends State<ManageRequest> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          OtherPfPage(UserId: userID)),
+                                          OtherPfPage(UserId: userID,UserType: 'FreeLancer',)),
                                 );
                               },
                               child: Text(
@@ -184,7 +184,7 @@ class _ManageRequestState extends State<ManageRequest> {
                                                   CollectionReference
                                                       Notification =
                                                       FirebaseFirestore.instance
-                                                          .collection('Users')
+                                                          .collection('FreeLancer')
                                                           .doc(userID)
                                                           .collection(
                                                               'Notification');
@@ -197,7 +197,7 @@ class _ManageRequestState extends State<ManageRequest> {
                                                     'Timestamp':Timestamp.now()
                                                   }).then((value) {
                                                     FirebaseFirestore.instance
-                                                        .collection('Users')
+                                                        .collection('FreeLancer')
                                                         .doc(userID)
                                                         .collection(
                                                         'PendingJobs')

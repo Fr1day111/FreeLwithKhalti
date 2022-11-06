@@ -40,7 +40,7 @@ class _PayAndFeedbackPageState extends State<PayAndFeedbackPage> {
     var amount=data['PayAmount'];
     var postid=data['PostId'];
     FirebaseFirestore.instance
-        .collection("Users")
+        .collection("FreeLancer")
         .doc(userid)
         .get()
         .then((value) async {
@@ -89,7 +89,7 @@ class _PayAndFeedbackPageState extends State<PayAndFeedbackPage> {
                       fontSize: 25,
                       fontWeight: FontWeight.bold
                     ),),
-                    Text("Amount:"+amount,
+                    Text("Amount: Rs"+amount,
                       style: const TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold
@@ -252,7 +252,7 @@ class _PayAndFeedbackPageState extends State<PayAndFeedbackPage> {
                                 )
                             );
                           }
-                            FirebaseFirestore.instance.collection('Users').doc(userid).collection('Feedback').doc().set({
+                            FirebaseFirestore.instance.collection('FreeLancer').doc(userid).collection('Feedback').doc().set({
                               'Rating':_rating,
                               'Feedback':_feedbackController.text,
                               'UserId': auth.currentUser!.uid

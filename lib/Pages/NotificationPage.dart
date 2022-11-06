@@ -7,7 +7,8 @@ import 'package:projectfirst/Pages/PendingJobPage.dart';
 import 'package:projectfirst/Pages/PendingPaymentPage.dart';
 
 class NotificationPage extends StatefulWidget {
-  const NotificationPage({Key? key}) : super(key: key);
+  final UserType;
+  const NotificationPage({Key? key,required this.UserType}) : super(key: key);
 
   @override
   State<NotificationPage> createState() => _NotificationPageState();
@@ -24,7 +25,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
-            .collection('Users')
+            .collection(widget.UserType)
             .doc(auth.currentUser!.uid)
             .collection('Notification').orderBy('Timestamp')
             .snapshots(),
@@ -43,33 +44,12 @@ class _NotificationPageState extends State<NotificationPage> {
             a['id'] = document.id;
             storedocs.add(a);
           }).toList();
-          print(storedocs);
-          print('***********************');
+         // print(storedocs);
+         // print('***********************');
 
-          // for (var i = 0; i < storedocs.length; i++) {
-          //   FirebaseFirestore.instance
-          //       .collection("Posts")
-          //       .doc(storedocs[i]['PostId'])
-          //       .get()
-          //       .then((value) async {
-          //     if (value.exists) {
-          //       Map b = value.data() as Map<String, dynamic>;
-          //       setState(() {
-          //         postinfo.add(b);
-          //       });
-          //     }
-          //     postinfo.toList(growable: true);
-          //   }).onError((error, stackTrace) {
-          //     print(error.toString());
-          //     print('llllllllllllllllllll');
-          //   });
-          //   print(postinfo);
-          //   print("&&&&&&&&&&&&&");
-          //   //Map a = post.data() as Map<String, dynamic>;
-          // }
           for (var i = 0; i < storedocs.length; i++) {
             FirebaseFirestore.instance
-                .collection("Users")
+                .collection("FreeLancer")
                 .doc(storedocs[i]['UserId'])
                 .get()
                 .then((value) async {
@@ -104,7 +84,7 @@ class _NotificationPageState extends State<NotificationPage> {
                       storedocs[i]['Type'] == 'Confirmation' ?
                       GestureDetector(
                         onTap: () {
-                          FirebaseFirestore.instance.collection('Users').doc(
+                          FirebaseFirestore.instance.collection('FreeLancer').doc(
                               auth.currentUser!.uid).collection('Notification')
                               .doc(storedocs[i]['id']).delete()
                               .then((value) {

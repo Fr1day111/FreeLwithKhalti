@@ -6,7 +6,8 @@ import 'ProfilePage.dart';
 
 class OtherPfPage extends StatefulWidget {
   final UserId;
-  const OtherPfPage({Key? key,required this.UserId}) : super(key: key);
+  final UserType;
+  const OtherPfPage({Key? key,required this.UserId,required this.UserType}) : super(key: key);
 
   @override
   State<OtherPfPage> createState() => _OtherPfPageState();
@@ -21,7 +22,7 @@ class _OtherPfPageState extends State<OtherPfPage> {
       body: SingleChildScrollView(
           child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
               future: FirebaseFirestore.instance
-                  .collection('Users')
+                  .collection(widget.UserType)
                   .doc(widget.UserId)
                   .get(),
               builder: (_, snapshot) {
@@ -36,6 +37,10 @@ class _OtherPfPageState extends State<OtherPfPage> {
                 var mail =data['Email'];
                 var pfpUrl = data['pfpUrl'].toString();
                 var cvUrl = data['cvUrl'].toString();
+                var speciality=data['Speciality'];
+                var highedu=data['HighEdu'];
+                var Achievement=data['Achievement'];
+                var Training=data['Training'];
                 return SafeArea(
                   child: Container(
                     child: Center(
@@ -102,11 +107,35 @@ class _OtherPfPageState extends State<OtherPfPage> {
                                   fontFamily: 'OpenSans',
                                   color: Colors.grey),
                             ),
+                            if (widget.UserType=='FreeLancer') Column(
+                              children: [
+                                const Text('Speciality:',style: TextStyle(
+                                    fontSize: 20, fontFamily: 'OpenSans'),),
+                                //Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                Text(speciality),
+                                const Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                const Text('Achievement:',style: TextStyle(
+                                    fontSize: 20, fontFamily: 'OpenSans'),),
+                                // Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                Text(Achievement),
+                                const Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                const Text('Highest Education:',style: TextStyle(
+                                    fontSize: 20, fontFamily: 'OpenSans'),),
+                                // Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                Text(highedu),
+                                const Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                const Text('Trainings:',style: TextStyle(
+                                    fontSize: 20, fontFamily: 'OpenSans'),),
+                                // Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                Text(Training),
+
+                              ],
+                            ) else Container(),
 
                             const SizedBox(
                               height: 40,
                             ),
-                            cvUrl!=" "?GestureDetector(
+                            cvUrl!=" "&&widget.UserType=='FreeLancer'?GestureDetector(
                               onTap: (){
                               Navigator.push(
                                 context,

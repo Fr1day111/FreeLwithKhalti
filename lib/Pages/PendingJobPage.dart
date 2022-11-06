@@ -17,7 +17,7 @@ class _PendinJobPageState extends State<PendinJobPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("Users").doc(auth.currentUser!.uid).collection('PendingJobs').snapshots(),
+        stream: FirebaseFirestore.instance.collection('FreeLancer').doc(auth.currentUser!.uid).collection('PendingJobs').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
       if (snapshot.hasError) {
         return const Text("Error");

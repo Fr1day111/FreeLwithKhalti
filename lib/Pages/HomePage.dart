@@ -15,53 +15,69 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _screens = [];
+  var _screens2= [];
   var _selectedIndex = 0;
-  var _size = 0;
+  //var _size = 0;
+  var UserType='';
+  void checkUser(){
+    FirebaseFirestore.instance.collection('FreeLancer').doc(FirebaseAuth.instance.currentUser!.uid).get().then((value){
+      if(value.exists){
+        setState(() {
+          UserType='FreeLancer';
+        });
+      }
+      else{
+        setState(() {
+          UserType='Users';
+        });
+      }
+      _screens = [
+        const FeedPage(),
+        NotificationPage(UserType: UserType,),
+        ProfilePage(UserType: UserType,)
+      ];
+      _screens2 = [
+        const AddPage(),
+        NotificationPage(UserType: UserType,),
+        ProfilePage(UserType: UserType,)
+      ];
 
+    });
+
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _screens = [
-      const FeedPage(),
-      const AddPage(),
-      const NotificationPage(),
-      const ProfilePage()
-    ];
+    checkUser();
+    print(UserType);
+
   }
+
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    FirebaseFirestore.instance
-        .collection('User')
-        .doc(auth.currentUser!.uid)
-        .collection('Notification')
-        .get()
-        .then((value) {
-      setState(() {
-        _size = value.size;
-      });
-    });
+    checkUser();
+    print(_screens2);
+    //print(UserType);
    // print(_size);
    // print('@@@@@@@@@@@@@@@@@@@@');
     return Padding(
       padding: const EdgeInsets.only(top: 62),
       child: Scaffold(
         body: SafeArea(
-          child: _screens[_selectedIndex],
+          child: UserType=='FreeLancer'?_screens[_selectedIndex]:_screens2[_selectedIndex],
         ),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.lightBlueAccent,
           unselectedItemColor: Colors.black,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            UserType=='FreeLancer'?BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'):
             BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
             BottomNavigationBarItem(
-                icon: ImageIcon(_size != 0
-                    ? AssetImage('Assets/Logo/notification.png')
-                    : AssetImage('Assets/Logo/nonotification.png')),
+                icon: ImageIcon(AssetImage('Assets/Logo/nonotification.png')),
                 label: 'Notifications'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],

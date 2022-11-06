@@ -60,7 +60,7 @@ class _PendingPaymentPageState extends State<PendingPaymentPage> {
           }
           for (var i = 0; i < storedocs.length; i++) {
             FirebaseFirestore.instance
-                .collection("Users")
+                .collection("FreeLancer")
                 .doc(storedocs[i]['UserId'])
                 .get()
                 .then((value) async {

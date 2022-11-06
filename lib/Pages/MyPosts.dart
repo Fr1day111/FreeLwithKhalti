@@ -52,19 +52,52 @@ class _MyPostPageState extends State<MyPostPage> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        storedocs[i]['Title'],
+                                        'Job Title:'+storedocs[i]['Title'],
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'OpenSans',
-                                            fontSize: 29),
+                                            fontSize:15),
+                                      ),
+                                      const Text(
+                                        'Job Description:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'OpenSans',
+                                            fontSize:15),
                                       ),
                                       Padding(
-                                        padding:
-                                        const EdgeInsets.symmetric(horizontal: 10),
-                                        child: Text(
-                                          storedocs[i]['Description'],
-                                          style:
-                                          const TextStyle(fontFamily: 'OpenSans'),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Container(
+                                          height: 100,
+                                          width: double.infinity,
+                                          color: Colors.lightBlueAccent,
+                                          child: Text(
+                                            storedocs[i]['Description'],
+                                            style: const TextStyle(
+                                                fontFamily: 'OpenSans'),
+                                          ),
+                                        ),
+                                      ),
+                                      const Text(
+                                        'Requirement for Job:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'OpenSans',
+                                            fontSize:15),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Container(
+                                          height: 100,
+                                          width: double.infinity,
+                                          color: Colors.lightBlueAccent,
+                                          child: Text(
+                                            storedocs[i]['Requirement'],
+                                            style: const TextStyle(
+                                                fontFamily: 'OpenSans'),
+                                          ),
                                         ),
                                       ),
                                       const SizedBox(
@@ -77,7 +110,7 @@ class _MyPostPageState extends State<MyPostPage> {
                                           alignment: Alignment.bottomLeft,
                                           child: RichText(
                                             text: TextSpan(
-                                              text: 'Budget:',
+                                              text: 'Budget: ',
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontFamily: 'OpenSans',
@@ -85,11 +118,13 @@ class _MyPostPageState extends State<MyPostPage> {
                                                   fontSize: 15),
                                               children: <TextSpan>[
                                                 TextSpan(
-                                                    text: storedocs[i]['Budget']
+                                                    text:'Rs.'+ storedocs[i]['Budget']
                                                         .toString(),
                                                     style: const TextStyle(
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Colors.blueAccent)),
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        color:
+                                                        Colors.lightBlueAccent)),
                                               ],
                                             ),
                                           ),
@@ -102,7 +137,7 @@ class _MyPostPageState extends State<MyPostPage> {
                                           alignment: Alignment.bottomLeft,
                                           child: RichText(
                                             text: TextSpan(
-                                              text: 'DeadLine:',
+                                              text: 'DeadLine: ',
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontFamily: 'OpenSans',
@@ -113,20 +148,26 @@ class _MyPostPageState extends State<MyPostPage> {
                                                     text: storedocs[i]['Deadline']
                                                         .toString(),
                                                     style: const TextStyle(
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Colors.blueAccent)),
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        color:
+                                                        Colors.lightBlueAccent)),
                                               ],
                                             ),
                                           ),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text('Catagory:${storedocs[i]['Type']}',
+                                          child: Text(
+                                            'Catagory:${storedocs[i]['Type']}',
                                             style: const TextStyle(
-                                                fontFamily: 'OpenSans', fontSize: 15,fontWeight: FontWeight.bold),
+                                                fontFamily: 'OpenSans',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                       ),

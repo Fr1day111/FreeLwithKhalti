@@ -51,6 +51,7 @@ class _DetailPageState extends State<DetailPage> {
           var data = snapshot.data!.data();
           var title = data!['Title'];
           var description = data['Description'];
+          var requriement = data['Requirement'];
           var amount = data['Budget'];
           var deadline = data['Deadline'];
           var userid = data['UserId'].toString();
@@ -61,27 +62,90 @@ class _DetailPageState extends State<DetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                        fontSize: 50,
-                        fontFamily: 'OpenSans',
-                        fontWeight: FontWeight.bold,
-                    color: Colors.lightBlueAccent),
-                  ),
-                ),
+                FutureBuilder<
+                    DocumentSnapshot<
+                        Map<String, dynamic>>>(
+                    future: FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(userid)
+                        .get(),
+                    builder: (_, snapshot) {
+                      //    if (snapshot.connectionState == ConnectionState.waiting) {
+                      //    return const Center(
+                      //    child: CircularProgressIndicator(),
+                      //);
+                      //}
+                      var data = snapshot.data!.data();
+                      var name = data!['UserName'];
+                      var pfpUrl =
+                      data['pfpUrl'].toString();
 
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    type,
-                    style: const TextStyle(
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            pfpUrl == ' '
+                                ? Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.blueAccent,
+                                  borderRadius:
+                                  BorderRadius.circular(200),
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                          'Assets/Logo/logomain.png'))),
+                            )
+                                : Container(
+                              height: 150,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                  color: Colors.blueAccent,
+                                  borderRadius:
+                                  BorderRadius.circular(200),
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(pfpUrl),
+                                  )),
+                            ),
+                            SizedBox(width: 20,),
+                            GestureDetector(
+                              onTap:(){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>OtherPfPage(UserId: userid,UserType: 'Users',)),
+                                );
+                              },
+                              child: Text(name,style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'OpenSans',
+                                  fontSize:25),),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                ),
+                Text(
+                  'Job Title:'+title,
+                  style: const TextStyle(
                       fontSize: 25,
                       fontFamily: 'OpenSans',
-                      color: Colors.grey
-                    ),
+                      fontWeight: FontWeight.bold,
+                  color: Colors.lightBlueAccent),
+                ),
+                Text(
+                  type,
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontFamily: 'OpenSans',
+                    color: Colors.grey
                   ),
                 ),
                 const SizedBox(
@@ -95,63 +159,74 @@ class _DetailPageState extends State<DetailPage> {
                       color: Colors.lightBlueAccent
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    description,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 30,
-                        fontFamily: 'OpenSans',
-                        ),
+                Text(
+                  description,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'OpenSans',
+                      ),
+                ),
+                const Text(
+                  'Requriments:',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontFamily: 'OpenSans',
+                      color: Colors.lightBlueAccent
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
+                Text(
+                  requriement,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'OpenSans',
+                  ),
                 ),
+                //const SizedBox(
+                  //height: 10,
+                //),
                 const Text(
                   "Budget:",
                   style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 20,
                       fontFamily: 'OpenSans',
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  amount,
+                  'Rs.'+amount,
                   style: const TextStyle(
-                    fontSize: 30,
+                    fontSize:20,
                     fontFamily: 'OpenSans',
                   ),
                 ),
                 const Text(
                   "Deadline:",
                   style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 20,
                       fontFamily: 'OpenSans',
                       fontWeight: FontWeight.bold),
                 ),
                 Text(deadline,
                   style: const TextStyle(
-                    fontSize: 30,
+                    fontSize:20,
                     fontFamily: 'OpenSans',
                   ),
                 ),
                 const SizedBox(height: 10),
-                GestureDetector(
-                    onTap:(){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>OtherPfPage(UserId: userid)),
-                      );
-                    },
-                    child: const Text("Visit Profile of Client",style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'OpenSans',
-                      fontSize: 20,
-                      color: Colors.lightBlueAccent,
-                      decoration: TextDecoration.underline,
-                    ),)),
+                // GestureDetector(
+                //     onTap:(){
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) =>OtherPfPage(UserId: userid,UserType: 'Users',)),
+                //       );
+                //     },
+                //     child: const Text("Visit Profile of Client",style: TextStyle(
+                //       fontWeight: FontWeight.bold,
+                //       fontFamily: 'OpenSans',
+                //       fontSize: 20,
+                //       color: Colors.lightBlueAccent,
+                //       decoration: TextDecoration.underline,
+                //     ),)),
                 const SizedBox(height: 30,),
                 Center(
                   child: GestureDetector(

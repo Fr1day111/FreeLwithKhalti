@@ -10,7 +10,8 @@ import 'dart:io';
 import 'package:projectfirst/Pages/ProfilePage.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
+  final String UserType;
+  const EditProfile({Key? key,required this.UserType}) : super(key: key);
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -22,6 +23,10 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController _UserNameController = TextEditingController();
   TextEditingController _BioController = TextEditingController();
   TextEditingController _PhoneNoController = TextEditingController();
+  TextEditingController _SpecialityController = TextEditingController();
+  TextEditingController _HighestEduController = TextEditingController();
+  TextEditingController _AchivementController = TextEditingController();
+  TextEditingController _TrainingController = TextEditingController();
   String pfpUrl = " ";
   String pdfUrl=" ";
   void picUploadImage(name) async {
@@ -61,7 +66,7 @@ class _EditProfileState extends State<EditProfile> {
             key: _editform,
             child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
               future: FirebaseFirestore.instance
-                  .collection('Users')
+                  .collection(widget.UserType)
                   .doc(auth.currentUser!.uid)
                   .get(),
               builder: (_, snapshot) {
@@ -76,10 +81,18 @@ class _EditProfileState extends State<EditProfile> {
                 var number = data['PhoneNo'];
                 var pfp = data['pfpUrl'].toString();
                 var cvUrl = data['cvUrl'].toString();
+                var speciality=data['Speciality'];
+                var highedu=data['HighEdu'];
+                var Achievement=data['Achievement'];
+                var Training=data['Training'];
                 var rating=data['Rating'];
                 _UserNameController = TextEditingController(text: name);
                 _BioController = TextEditingController(text: bio);
                 _PhoneNoController = TextEditingController(text: number);
+                _SpecialityController = TextEditingController(text: speciality);
+                _AchivementController=TextEditingController(text: Achievement);
+                _TrainingController=TextEditingController(text: Training);
+                _HighestEduController=TextEditingController(text: highedu);
                 pfp!=' '? pfpUrl=pfp:null;
                 cvUrl!=' '? pdfUrl=cvUrl:null;
 
@@ -107,16 +120,7 @@ class _EditProfileState extends State<EditProfile> {
                                         image:
                                         AssetImage('Assets/Logo/logomain.png')
                                     )),
-                                //  child: CircleAvatar(
-                                //  radius: 80.0,
-                                // backgroundColor: Colors.transparent,
-                                //child: pfpUrl == " "
-                                //  ? const ImageIcon(
-                                //    AssetImage('Assets/Logo/logomain.png'),
-                                //  size: 110,
-                                // )
-                                // : Image.network(pfpUrl),
-                                //),
+
                               ):Container(
                                 height: 150,
                                 width: 150,
@@ -128,16 +132,7 @@ class _EditProfileState extends State<EditProfile> {
                                       image:
                                       NetworkImage(pfpUrl),
                                     )),
-                                //  child: CircleAvatar(
-                                //  radius: 80.0,
-                                // backgroundColor: Colors.transparent,
-                                //child: pfpUrl == " "
-                                //  ? const ImageIcon(
-                                //    AssetImage('Assets/Logo/logomain.png'),
-                                //  size: 110,
-                                // )
-                                // : Image.network(pfpUrl),
-                                //),
+
                               ),
                               const SizedBox(
                                 height: 10,
@@ -229,13 +224,101 @@ class _EditProfileState extends State<EditProfile> {
                                   ),
                                 ),
                               ),
+                              widget.UserType=='FreeLancer'?Column(
+                                children: [
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(left: 25, right: 25,top: 10),
+                                    child: TextFormField(
+                                      // initialValue: bio,
+                                      controller: _SpecialityController,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.grey[200],
+                                        label: const Text('Speciality:'),
+                                        hintText: 'Speciality',
+                                        hintStyle:
+                                        const TextStyle(fontFamily: 'OpenSans'),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      minLines: 3,
+                                      maxLines: 5,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(left: 25, right: 25,top: 10),
+                                    child: TextFormField(
+                                      // initialValue: bio,
+                                      controller: _HighestEduController,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.grey[200],
+                                        label: const Text('Highest Education'),
+                                        hintText: 'Highest Education',
+                                        hintStyle:
+                                        const TextStyle(fontFamily: 'OpenSans'),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      minLines: 3,
+                                      maxLines: 5,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(left: 25, right: 25,top: 10),
+                                    child: TextFormField(
+                                      // initialValue: bio,
+                                      controller:_AchivementController,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.grey[200],
+                                        label: const Text('Achievement'),
+                                        hintText: 'Achievement',
+                                        hintStyle:
+                                        const TextStyle(fontFamily: 'OpenSans'),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      minLines: 3,
+                                      maxLines: 5,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.only(left: 25, right: 25,top: 10),
+                                    child: TextFormField(
+                                      // initialValue: bio,
+                                      controller: _TrainingController,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.grey[200],
+                                        label: const Text('Training'),
+                                        hintText: 'Trainings',
+                                        hintStyle:
+                                        const TextStyle(fontFamily: 'OpenSans'),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      minLines: 3,
+                                      maxLines: 5,
+                                    ),
+                                  ),
+                                ],
+                              ):Container(),
                               const SizedBox(
                                 height: 10,
                               ),
                               //Text(cvUrl==""?
                               //""
                               //: cvUrl),
-                              Container(
+                              widget.UserType=='FreeLancer'?Container(
                                 height: 100,
                                 width: 330,
                                 decoration: BoxDecoration(
@@ -273,7 +356,7 @@ class _EditProfileState extends State<EditProfile> {
                                     ],
                                   ),
                                 ),
-                              ),
+                              ):Container(),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -283,15 +366,23 @@ class _EditProfileState extends State<EditProfile> {
                                  // print(cvUrl);
                                  // print(pfpUrl);
                                   FirebaseFirestore.instance
-                                      .collection("Users")
+                                      .collection(widget.UserType)
                                       .doc(auth.currentUser!.uid)
                                       .update({
+                                    'Speciality': _SpecialityController.text,
                                     'UserName': _UserNameController.text,
                                     'PhoneNo': _PhoneNoController.text,
                                     'Bio': _BioController.text,
                                     'Email': auth.currentUser!.email,
                                     'pfpUrl': pfpUrl,
                                     'cvUrl' : pdfUrl,
+                                    'HighEdu':_HighestEduController.text,
+                                    'Achievement':_AchivementController.text,
+                                    'Training':_TrainingController.text
+                                 // var highedu=data['HighEdu'];
+                                 // var Achievement=data['Achievement'];
+                                 // var Training=data['Training'];
+                                  //var rating=data['Rating'];
                                   }).then((value) {
                                     Navigator.push(
                                       context,
