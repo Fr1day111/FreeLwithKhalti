@@ -89,6 +89,7 @@ class _FeedPageState extends State<FeedPage> {
                                   width: double.infinity,
                                   child: Column(
                                     children: [
+                                      SizedBox(height: 10,),
                                       FutureBuilder<
                                               DocumentSnapshot<
                                                   Map<String, dynamic>>>(
