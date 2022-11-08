@@ -26,6 +26,12 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text('Sign Up As:',style: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold
+                ),),
+                SizedBox(height: 20,),
                 GestureDetector(
                   onTap: (){
                     Navigator.push(
@@ -37,18 +43,23 @@ class _SignUpState extends State<SignUp> {
 
                   },
                   child: Container(
-                    height: 70,
-                    width: 300,
+                   // height: 70,
+                    width:200,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: Colors.red,
                     ),
-                    child: const Center(
-                        child: Text(
-                          'FreeLancer',
-                          style: TextStyle(
-                              fontFamily: 'OpenSans',
-                              fontWeight: FontWeight.bold),
+                    child: Center(
+                        child: Column(
+                          children: [
+                            Image.asset('Assets/Photos/FreeLance.png',width:150,),
+                            Text(
+                              'FREELANCER',
+                              style: TextStyle(
+                                  fontFamily: 'OpenSans',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         )),
                   ),
                 ),
@@ -63,21 +74,28 @@ class _SignUpState extends State<SignUp> {
                     );
                   },
                   child: Container(
-                    height: 70,
-                    width: 300,
+                   // height: 70,
+                   width: 200,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: Colors.lightBlueAccent,
                     ),
-                    child: const Center(
-                        child: Text(
-                          'Client',
-                          style: TextStyle(
-                              fontFamily: 'OpenSans',
-                              fontWeight: FontWeight.bold),
+                    child: Center(
+                        child: Column(
+
+                          children: [
+                            Image.asset('Assets/Photos/Client.png',width: 150,),
+                            Text(
+                              'CLIENT',
+                              style: TextStyle(
+                                  fontFamily: 'OpenSans',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         )),
                   ),
                 ),
+                SizedBox(height: 30,),
                 RichText(text: TextSpan(
                     text: 'Already Have an account? ',
                     style: const TextStyle(fontFamily: 'OpenSans',color: Colors.black,

@@ -67,9 +67,9 @@ class _HomePageState extends State<HomePage> {
     return Padding(
       padding: const EdgeInsets.only(top: 62),
       child: Scaffold(
-        body: SafeArea(
+        body: UserType!=''?SafeArea(
           child: UserType=='FreeLancer'?_screens[_selectedIndex]:_screens2[_selectedIndex],
-        ),
+        ): const Center(child: CircularProgressIndicator()),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.lightBlueAccent,
           unselectedItemColor: Colors.black,

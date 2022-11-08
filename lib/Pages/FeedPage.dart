@@ -147,9 +147,9 @@ class _FeedPageState extends State<FeedPage> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),
                                       child: Container(
-                                        height: 100,
+                                        //height: 100,
                                         width: double.infinity,
-                                        color: Colors.lightBlueAccent,
+                                        color: Colors.grey,
                                         child: Text(
                                           storedocs[i]['Description'],
                                           style: const TextStyle(
@@ -168,9 +168,9 @@ class _FeedPageState extends State<FeedPage> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),
                                       child: Container(
-                                        height: 100,
+                                       // height: 100,
                                         width: double.infinity,
-                                        color: Colors.lightBlueAccent,
+                                        color: Colors.grey,
                                         child: Text(
                                           storedocs[i]['Requirement'],
                                           style: const TextStyle(

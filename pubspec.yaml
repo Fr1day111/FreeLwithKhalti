@@ -78,6 +78,8 @@ flutter:
      - Assets/Logo/nonotification.png
      - Assets/Logo/notification.png
      - Assets/Logo/KhaltiLogo.png
+     - Assets/Photos/Client.png
+     - Assets/Photos/FreeLance.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

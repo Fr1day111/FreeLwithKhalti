@@ -52,6 +52,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     //    child: CircularProgressIndicator(),
                       //);
                     //}
+                   // snapshot.data!.data()!=null?
+                  // if(snapshot.connectionState==ConnectionState.done){
                     var data = snapshot.data!.data();
                     var name = data!['UserName'];
                     var bio = data['Bio'].toString();
@@ -61,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     var highedu=data['HighEdu'].toString();
                     var Achievement=data['Achievement'].toString();
                     var Training=data['Training'].toString();
-                    return SafeArea(
+                    return snapshot.data!.data()!=null?SafeArea(
                       child: Container(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 2),
@@ -114,25 +116,38 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               if (widget.UserType=='FreeLancer') Column(
                                 children: [
+                                  const Divider(thickness: 5,color: Colors.lightBlueAccent,),
                                   const Text('Speciality:',style: TextStyle(
                                       fontSize: 20, fontFamily: 'OpenSans'),),
                                   //Divider(thickness: 5,color: Colors.lightBlueAccent,),
-                                  Text(speciality),
+                                  Text(speciality,style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'OpenSans'
+                                  ),),
                                   const Divider(thickness: 5,color: Colors.lightBlueAccent,),
                                   const Text('Achievement:',style: TextStyle(
                                       fontSize: 20, fontFamily: 'OpenSans'),),
                                  // Divider(thickness: 5,color: Colors.lightBlueAccent,),
-                                  Text(Achievement),
+                                  Text(Achievement,style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'OpenSans'
+                                  ),),
                                   const Divider(thickness: 5,color: Colors.lightBlueAccent,),
                                   const Text('Highest Education:',style: TextStyle(
                                       fontSize: 20, fontFamily: 'OpenSans'),),
                                  // Divider(thickness: 5,color: Colors.lightBlueAccent,),
-                                  Text(highedu),
+                                  Text(highedu,style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'OpenSans'
+                                  ),),
                                   const Divider(thickness: 5,color: Colors.lightBlueAccent,),
                                   const Text('Trainings:',style: TextStyle(
                                       fontSize: 20, fontFamily: 'OpenSans'),),
                                   // Divider(thickness: 5,color: Colors.lightBlueAccent,),
-                                  Text(Training),
+                                  Text(Training,style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'OpenSans'
+                                  ),),
 
                                 ],
                               ) else Container(),
@@ -426,7 +441,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                    );
+                    ):CircularProgressIndicator();
+
                   })),
     );
   }

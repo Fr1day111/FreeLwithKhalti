@@ -69,7 +69,7 @@ class _MyPostPageState extends State<MyPostPage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10),
                                         child: Container(
-                                          height: 100,
+                                          //height: 100,
                                           width: double.infinity,
                                           color: Colors.lightBlueAccent,
                                           child: Text(
@@ -90,7 +90,7 @@ class _MyPostPageState extends State<MyPostPage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10),
                                         child: Container(
-                                          height: 100,
+                                         // height: 100,
                                           width: double.infinity,
                                           color: Colors.lightBlueAccent,
                                           child: Text(
