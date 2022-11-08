@@ -31,8 +31,8 @@ class _AddPageState extends State<AddPage> {
       //backgroundColor: Colors.lightBlue,
       body: Container(
         decoration: const BoxDecoration(
-            //  image: DecorationImage(
-            //     image: AssetImage("Assets/Photos/bg.png"), fit: BoxFit.fill),
+             // image: DecorationImage(
+             //    image: AssetImage("Assets/Photos/bg.png"), fit: BoxFit.fill),
             ),
         child: Form(
           key: _signupform,

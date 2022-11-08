@@ -50,217 +50,234 @@ class _FeedPageState extends State<FeedPage> {
           return Scaffold(
             body: SingleChildScrollView(
               child: SafeArea(
-                child: Column(
-                  children: [
-                    for (var i = 0; i < storedocs.length; i++) ...[
-                      if (storedocs[i]['RequestStatus'] == 'Waiting') ...[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DetailPage(
-                                          postid: storedocs[i]['id'],
-                                        )),
-                              );
-                            },
-                            child: Card(
-                              elevation: 15,
-                              borderOnForeground: true,
-                              shadowColor: Colors.lightBlueAccent,
-                              child: Container(
-                                width: double.infinity,
-                                child: Column(
-                                  children: [
-                                    FutureBuilder<
-                                            DocumentSnapshot<
-                                                Map<String, dynamic>>>(
-                                        future: FirebaseFirestore.instance
-                                            .collection('Users')
-                                            .doc(storedocs[i]['UserId'])
-                                            .get(),
-                                        builder: (_, snapshot) {
-                                          var data = snapshot.data!.data();
-                                          var name = data!['UserName'];
-                                          var pfpUrl =
-                                              data['pfpUrl'].toString();
-                                          return Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                pfpUrl == ' '
-                                                    ? Container(
-                                                  height: 50,
-                                                  width: 50,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.blueAccent,
-                                                      borderRadius:
-                                                      BorderRadius.circular(200),
-                                                      image: DecorationImage(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment(0.8, 1),
+                      colors: <Color>[
+                        Colors.yellow,
+                        Colors.grey,
+                        Colors.lightBlueAccent,
+                        Colors.red
+                      ],
+                      tileMode: TileMode.mirror,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      for (var i = 0; i < storedocs.length; i++) ...[
+                        if (storedocs[i]['RequestStatus'] == 'Waiting') ...[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DetailPage(
+                                            postid: storedocs[i]['id'],
+                                          )),
+                                );
+                              },
+                              child: Card(
+                                elevation: 15,
+                                borderOnForeground: true,
+                                shadowColor: Colors.lightBlueAccent,
+                                child: Container(
+
+                                  width: double.infinity,
+                                  child: Column(
+                                    children: [
+                                      FutureBuilder<
+                                              DocumentSnapshot<
+                                                  Map<String, dynamic>>>(
+                                          future: FirebaseFirestore.instance
+                                              .collection('Users')
+                                              .doc(storedocs[i]['UserId'])
+                                              .get(),
+                                          builder: (_, snapshot) {
+                                            var data = snapshot.data!.data();
+                                            var name = data!['UserName'];
+                                            var pfpUrl =
+                                                data['pfpUrl'].toString();
+                                            return Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  pfpUrl == ' '
+                                                      ? Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.blueAccent,
+                                                        borderRadius:
+                                                        BorderRadius.circular(200),
+                                                        image: DecorationImage(
+                                                            fit: BoxFit.fill,
+                                                            image: AssetImage(
+                                                                'Assets/Logo/logomain.png'))),
+                                                  )
+                                                      : Container(
+                                                    height: 150,
+                                                    width: 150,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.blueAccent,
+                                                        borderRadius:
+                                                        BorderRadius.circular(200),
+                                                        image: DecorationImage(
                                                           fit: BoxFit.fill,
-                                                          image: AssetImage(
-                                                              'Assets/Logo/logomain.png'))),
-                                                )
-                                                    : Container(
-                                                  height: 150,
-                                                  width: 150,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.blueAccent,
-                                                      borderRadius:
-                                                      BorderRadius.circular(200),
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: NetworkImage(pfpUrl),
-                                                      )),
-                                                ),
-                                                SizedBox(width: 20,),
-                                                Text(name,style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily: 'OpenSans',
-                                                    fontSize:25),),
+                                                          image: NetworkImage(pfpUrl),
+                                                        )),
+                                                  ),
+                                                  SizedBox(width: 20,),
+                                                  Text(name,style: const TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontFamily: 'OpenSans',
+                                                      fontSize:25),),
+                                                ],
+                                              ),
+                                            );
+                                          }),
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 25.0),
+                                        child: Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                      ),
+                                      Text(
+                                        'Job Title:'+storedocs[i]['Title'],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'OpenSans',
+                                            fontSize:15),
+                                      ),
+                                      const Text(
+                                        'Job Description:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'OpenSans',
+                                            fontSize:15),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Container(
+                                          //height: 100,
+                                          width: double.infinity,
+                                          color: Colors.white,
+                                          child: Text(
+                                            storedocs[i]['Description'],
+                                            style: const TextStyle(
+                                                fontFamily: 'OpenSans'),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                      const Text(
+                                        'Requirement for Job:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'OpenSans',
+                                            fontSize:15),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Container(
+                                         // height: 100,
+                                          width: double.infinity,
+                                          color: Colors.white,
+                                          child: Text(
+                                            storedocs[i]['Requirement'],
+                                            style: const TextStyle(
+                                                fontFamily: 'OpenSans'),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0),
+                                        child: Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: RichText(
+                                            text: TextSpan(
+                                              text: 'Budget: ',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.black,
+                                                  fontSize: 15),
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text:'Rs.'+ storedocs[i]['Budget']
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            Colors.red)),
                                               ],
                                             ),
-                                          );
-                                        }),
-                                    const Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 25.0),
-                                      child: Divider(thickness: 5,color: Colors.lightBlueAccent,),
-                                    ),
-                                    Text(
-                                      'Job Title:'+storedocs[i]['Title'],
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'OpenSans',
-                                          fontSize:15),
-                                    ),
-                                    const Text(
-                                      'Job Description:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'OpenSans',
-                                          fontSize:15),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      child: Container(
-                                        //height: 100,
-                                        width: double.infinity,
-                                        color: Colors.grey,
-                                        child: Text(
-                                          storedocs[i]['Description'],
-                                          style: const TextStyle(
-                                              fontFamily: 'OpenSans'),
-                                        ),
-                                      ),
-                                    ),
-                                    const Text(
-                                      'Requirement for Job:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'OpenSans',
-                                          fontSize:15),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      child: Container(
-                                       // height: 100,
-                                        width: double.infinity,
-                                        color: Colors.grey,
-                                        child: Text(
-                                          storedocs[i]['Requirement'],
-                                          style: const TextStyle(
-                                              fontFamily: 'OpenSans'),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10.0),
-                                      child: Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: RichText(
-                                          text: TextSpan(
-                                            text: 'Budget: ',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'OpenSans',
-                                                color: Colors.black,
-                                                fontSize: 15),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text:'Rs.'+ storedocs[i]['Budget']
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color:
-                                                          Colors.lightBlueAccent)),
-                                            ],
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10.0),
-                                      child: Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: RichText(
-                                          text: TextSpan(
-                                            text: 'DeadLine: ',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'OpenSans',
-                                                color: Colors.black,
-                                                fontSize: 15),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text: storedocs[i]['Deadline']
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color:
-                                                          Colors.lightBlueAccent)),
-                                            ],
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0),
+                                        child: Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: RichText(
+                                            text: TextSpan(
+                                              text: 'DeadLine: ',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.black,
+                                                  fontSize: 15),
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text: storedocs[i]['Deadline']
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            Colors.redAccent)),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Catagory:${storedocs[i]['Type']}',
-                                          style: const TextStyle(
-                                              fontFamily: 'OpenSans',
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            'Catagory:${storedocs[i]['Type']}',
+                                            style: const TextStyle(
+                                                fontFamily: 'OpenSans',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    )
-                                  ],
+                                      const SizedBox(
+                                        height: 10,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
+                        ]
                       ]
-                    ]
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

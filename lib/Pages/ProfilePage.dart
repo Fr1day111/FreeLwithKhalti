@@ -110,6 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           fontSize: 30,
                                           fontFamily: 'OpenSans',
                                           color: Colors.grey),
+                                textAlign: TextAlign.center,
                                     ),
                               const SizedBox(
                                 height: 20,
