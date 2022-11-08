@@ -47,13 +47,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     if (snapshot.hasError) {
                       auth.signOut();
                     }
-                //    if (snapshot.connectionState == ConnectionState.waiting) {
-                  //    return const Center(
-                    //    child: CircularProgressIndicator(),
-                      //);
-                    //}
+                   // if (snapshot.connectionState == ConnectionState.waiting) {
+                   //   return const Center(
+                   //     child: CircularProgressIndicator(),
+                   //    );
+                   //  }
                    // snapshot.data!.data()!=null?
-                  // if(snapshot.connectionState==ConnectionState.done){
+                   //if(snapshot.connectionState==ConnectionState.done){
                     var data = snapshot.data!.data();
                     var name = data!['UserName'];
                     var bio = data['Bio'].toString();
@@ -379,27 +379,27 @@ class _ProfilePageState extends State<ProfilePage> {
                                       a['id'] = document.id;
                                       storedocs.add(a);
                                     }).toList();
-                                        for (var i = 0; i < storedocs.length; i++) {
-                                      FirebaseFirestore.instance
-                                          .collection("Users")
-                                          .doc(storedocs[i]['UserId'])
-                                          .get()
-                                          .then((value) async {
-                                        if (value.exists) {
-                                          Map c = value.data() as Map<String, dynamic>;
-                                          setState(() {
-                                            userinfo.add(c);
-                                          });
-                                        }
-                                        else {
-                                          userinfo[i] = null;
-                                        }
-                                        userinfo.toList(growable: true);
-                                      }).onError((error, stackTrace) {
-                                        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                                      });
-                                    }
-                                    return storedocs.isNotEmpty? 
+                                    //     for (var i = 0; i < storedocs.length; i++) {
+                                    //   FirebaseFirestore.instance
+                                    //       .collection("Users")
+                                    //       .doc(storedocs[i]['UserId'])
+                                    //       .get()
+                                    //       .then((value) async {
+                                    //     if (value.exists) {
+                                    //       Map c = value.data() as Map<String, dynamic>;
+                                    //       setState(() {
+                                    //         userinfo.add(c);
+                                    //       });
+                                    //     }
+                                    //     else {
+                                    //       userinfo[i] = null;
+                                    //     }
+                                    //     userinfo.toList(growable: true);
+                                    //   }).onError((error, stackTrace) {
+                                    //     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                                    //   });
+                                    // }
+                                    return storedocs.isNotEmpty?
                                       Column(
                                         children: [
                                       for (var i = 0; i < storedocs.length; i++) ...[
@@ -411,10 +411,61 @@ class _ProfilePageState extends State<ProfilePage> {
                                               padding: const EdgeInsets.all(8.0),
                                               child: Column(
                                                 children: [
-                                                  Text(userinfo[i]['UserName'],style: const TextStyle(
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans'
-                                                  ),),
+                                                  FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                                                      future: FirebaseFirestore.instance
+                                                          .collection('Users')
+                                                          .doc(storedocs[i]['UserId'])
+                                                          .get(),
+                                                      builder: (_, snapshot){
+                                                        // if (snapshot.connectionState == ConnectionState.waiting) {
+                                                        //   return const Center(
+                                                        //     child: CircularProgressIndicator(),
+                                                        //    );
+                                                        //  }
+                                                        var data = snapshot.data!.data();
+                                                        var name = data!['UserName'];
+                                                        var pfpUrl =
+                                                        data['pfpUrl'].toString();
+
+                                                        return Row(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: [
+                                                            pfpUrl == ' '
+                                                                ? Container(
+                                                              height: 50,
+                                                              width: 50,
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors.blueAccent,
+                                                                  borderRadius:
+                                                                  BorderRadius.circular(200),
+                                                                  image: DecorationImage(
+                                                                      fit: BoxFit.fill,
+                                                                      image: AssetImage(
+                                                                          'Assets/Logo/logomain.png'))),
+                                                            )
+                                                                : Container(
+                                                              height: 150,
+                                                              width: 150,
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors.blueAccent,
+                                                                  borderRadius:
+                                                                  BorderRadius.circular(200),
+                                                                  image: DecorationImage(
+                                                                    fit: BoxFit.fill,
+                                                                    image: NetworkImage(pfpUrl),
+                                                                  )),
+                                                            ),
+                                                            Text(name,style: const TextStyle(
+                                                                fontSize: 20,
+                                                                fontFamily: 'OpenSans'
+                                                            ),),
+                                                          ],
+                                                        );
+                                                      }),
+                                                  // Text(userinfo[i]['UserName'],style: const TextStyle(
+                                                  //   fontSize: 20,
+                                                  //   fontFamily: 'OpenSans'
+                                                  // ),),
                                                   RatingBar.readOnly(
                                                     initialRating: num.parse(storedocs[i]['Rating'].toString()).toDouble(),
                                                     isHalfAllowed: true,
@@ -434,7 +485,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         )
                                       ]
                                         ],
-                                      
+
                                     ):const Center(child: Text('No Feedback'));
                                   })
                             ],
@@ -442,7 +493,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ):CircularProgressIndicator();
-
+                  //}
+                  // return Container();
                   })),
     );
   }
