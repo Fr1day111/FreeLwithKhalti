@@ -89,7 +89,7 @@ class _FeedPageState extends State<FeedPage> {
                                   width: double.infinity,
                                   child: Column(
                                     children: [
-                                      SizedBox(height: 10,),
+                                      const SizedBox(height: 10,),
                                       FutureBuilder<
                                               DocumentSnapshot<
                                                   Map<String, dynamic>>>(
@@ -98,10 +98,14 @@ class _FeedPageState extends State<FeedPage> {
                                               .doc(storedocs[i]['UserId'])
                                               .get(),
                                           builder: (_, snapshot) {
+
+                                            if(snapshot.connectionState==ConnectionState.waiting){
+                                              return const Center(child: CircularProgressIndicator(),);
+                                            }
                                             var data = snapshot.data!.data();
                                             var name = data!['UserName'];
                                             var pfpUrl =
-                                                data['pfpUrl'].toString();
+                                            data['pfpUrl'].toString();
                                             return Padding(
                                               padding: const EdgeInsets.symmetric(horizontal: 25.0),
                                               child: Row(
@@ -115,7 +119,7 @@ class _FeedPageState extends State<FeedPage> {
                                                         color: Colors.blueAccent,
                                                         borderRadius:
                                                         BorderRadius.circular(200),
-                                                        image: DecorationImage(
+                                                        image: const DecorationImage(
                                                             fit: BoxFit.fill,
                                                             image: AssetImage(
                                                                 'Assets/Logo/logomain.png'))),
@@ -132,7 +136,7 @@ class _FeedPageState extends State<FeedPage> {
                                                           image: NetworkImage(pfpUrl),
                                                         )),
                                                   ),
-                                                  SizedBox(width: 20,),
+                                                  const SizedBox(width: 20,),
                                                   Text(name,style: const TextStyle(
                                                       fontWeight: FontWeight.bold,
                                                       fontFamily: 'OpenSans',

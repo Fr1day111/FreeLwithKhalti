@@ -70,11 +70,11 @@ class _DetailPageState extends State<DetailPage> {
                         .doc(userid)
                         .get(),
                     builder: (_, snapshot) {
-                      //    if (snapshot.connectionState == ConnectionState.waiting) {
-                      //    return const Center(
-                      //    child: CircularProgressIndicator(),
-                      //);
-                      //}
+                         if (snapshot.connectionState == ConnectionState.waiting) {
+                         return const Center(
+                         child: CircularProgressIndicator(),
+                      );
+                      }
                       var data = snapshot.data!.data();
                       var name = data!['UserName'];
                       var pfpUrl =
@@ -93,7 +93,7 @@ class _DetailPageState extends State<DetailPage> {
                                   color: Colors.blueAccent,
                                   borderRadius:
                                   BorderRadius.circular(200),
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                       fit: BoxFit.fill,
                                       image: AssetImage(
                                           'Assets/Logo/logomain.png'))),
@@ -110,7 +110,7 @@ class _DetailPageState extends State<DetailPage> {
                                     image: NetworkImage(pfpUrl),
                                   )),
                             ),
-                            SizedBox(width: 20,),
+                            const SizedBox(width: 20,),
                             GestureDetector(
                               onTap:(){
                                 Navigator.push(
@@ -246,7 +246,7 @@ class _DetailPageState extends State<DetailPage> {
                             builder: (BuildContext context) =>
                             AlertDialog(
                           title: const Text('Done!!'),
-                          content:Text("You Have Register the job!!\nWait for response..."),
+                          content:const Text("You Have Register the job!!\nWait for response..."),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {

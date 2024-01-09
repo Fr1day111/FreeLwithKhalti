@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projectfirst/Pages/HomePage.dart';
 import 'package:projectfirst/Payment/KhaltiScope.dart';
-import 'package:rating_bar/rating_bar.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class PayAndFeedbackPage extends StatefulWidget {
@@ -190,17 +190,17 @@ class _PayAndFeedbackPageState extends State<PayAndFeedbackPage> {
                                   fontWeight: FontWeight.bold,
                               fontSize: 20),),
                               const SizedBox(height: 15,),
-                              RatingBar(
-                                onRatingChanged: (rating) {setState(() => _rating = rating);},
-                                filledIcon: Icons.star,
-                                emptyIcon: Icons.star_border,
-                                halfFilledIcon: Icons.star_half,
-                                isHalfAllowed: true,
-                                filledColor: Colors.lightBlueAccent,
-                                emptyColor: Colors.lightBlueAccent,
-                                halfFilledColor: Colors.lightBlueAccent,
-                                size: 48,
-                              ),
+                              // RatingBar(
+                              //   onRatingChanged: (rating) {setState(() => _rating = rating);},
+                              //   filledIcon: Icons.star,
+                              //   emptyIcon: Icons.star_border,
+                              //   halfFilledIcon: Icons.star_half,
+                              //   isHalfAllowed: true,
+                              //   filledColor: Colors.lightBlueAccent,
+                              //   emptyColor: Colors.lightBlueAccent,
+                              //   halfFilledColor: Colors.lightBlueAccent,
+                              //   size: 48,
+                              // ),
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: TextFormField(

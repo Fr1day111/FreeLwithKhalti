@@ -50,8 +50,6 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     checkUser();
-    print(UserType);
-
   }
 
 
@@ -59,9 +57,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    checkUser();
-    print(_screens2);
-    //print(UserType);
+   // checkUser();
+    print(UserType);
    // print(_size);
    // print('@@@@@@@@@@@@@@@@@@@@');
     return Padding(
@@ -74,12 +71,13 @@ class _HomePageState extends State<HomePage> {
           selectedItemColor: Colors.lightBlueAccent,
           unselectedItemColor: Colors.black,
           items: [
-            UserType=='FreeLancer'?BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'):
-            BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
-            BottomNavigationBarItem(
+
+            UserType=='FreeLancer'?const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'):
+            const BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
+            const BottomNavigationBarItem(
                 icon: ImageIcon(AssetImage('Assets/Logo/nonotification.png')),
                 label: 'Notifications'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+            const BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
           currentIndex: _selectedIndex,
           onTap: (index) {

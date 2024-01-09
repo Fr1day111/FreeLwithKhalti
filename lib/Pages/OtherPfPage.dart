@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:rating_bar/rating_bar.dart';
+
 
 import 'ProfilePage.dart';
 
@@ -288,14 +288,14 @@ class _OtherPfPageState extends State<OtherPfPage> {
                                                           ],
                                                         );
                                                       }),
-                                                  RatingBar.readOnly(
-                                                    initialRating: num.parse(storedocs[i]['Rating'].toString()).toDouble(),
-                                                    isHalfAllowed: true,
-                                                    halfFilledIcon: Icons.star_half,
-                                                    filledIcon: Icons.star,
-                                                    emptyIcon: Icons.star_border,
-                                                    size: 40,
-                                                  ),
+                                                  // RatingBar.readOnly(
+                                                  //   initialRating: num.parse(storedocs[i]['Rating'].toString()).toDouble(),
+                                                  //   isHalfAllowed: true,
+                                                  //   halfFilledIcon: Icons.star_half,
+                                                  //   filledIcon: Icons.star,
+                                                  //   emptyIcon: Icons.star_border,
+                                                  //   size: 40,
+                                                  // ),
                                                   Text(storedocs[i]['Feedback'],style: TextStyle(
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 15

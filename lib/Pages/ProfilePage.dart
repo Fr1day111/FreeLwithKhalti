@@ -8,7 +8,7 @@ import 'package:projectfirst/Pages/PendingJobPage.dart';
 import 'package:projectfirst/Pages/SignInPage.dart';
 import 'package:projectfirst/main.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:rating_bar/rating_bar.dart';
+
 
 import 'PendingPaymentPage.dart';
 
@@ -47,11 +47,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     if (snapshot.hasError) {
                       auth.signOut();
                     }
-                   // if (snapshot.connectionState == ConnectionState.waiting) {
-                   //   return const Center(
-                   //     child: CircularProgressIndicator(),
-                   //    );
-                   //  }
+                   if (snapshot.connectionState == ConnectionState.waiting) {
+                     return const Center(
+                       child: CircularProgressIndicator(),
+                      );
+                    }
                    // snapshot.data!.data()!=null?
                    //if(snapshot.connectionState==ConnectionState.done){
                     var data = snapshot.data!.data();
@@ -418,11 +418,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           .doc(storedocs[i]['UserId'])
                                                           .get(),
                                                       builder: (_, snapshot){
-                                                        // if (snapshot.connectionState == ConnectionState.waiting) {
-                                                        //   return const Center(
-                                                        //     child: CircularProgressIndicator(),
-                                                        //    );
-                                                        //  }
+                                                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                                          return const Center(
+                                                            child: CircularProgressIndicator(),
+                                                           );
+                                                         }
                                                         var data = snapshot.data!.data();
                                                         var name = data!['UserName'];
                                                         var pfpUrl =
@@ -467,14 +467,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   //   fontSize: 20,
                                                   //   fontFamily: 'OpenSans'
                                                   // ),),
-                                                  RatingBar.readOnly(
-                                                    initialRating: num.parse(storedocs[i]['Rating'].toString()).toDouble(),
-                                                    isHalfAllowed: true,
-                                                    halfFilledIcon: Icons.star_half,
-                                                    filledIcon: Icons.star,
-                                                    emptyIcon: Icons.star_border,
-                                                    size: 40,
-                                                  ),
+                                                  // RatingBar.readOnly(
+                                                  //   initialRating: num.parse(storedocs[i]['Rating'].toString()).toDouble(),
+                                                  //   isHalfAllowed: true,
+                                                  //   halfFilledIcon: Icons.star_half,
+                                                  //   filledIcon: Icons.star,
+                                                  //   emptyIcon: Icons.star_border,
+                                                  //   size: 40,
+                                                  // ),
                                                   Text(storedocs[i]['Feedback'],style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15
