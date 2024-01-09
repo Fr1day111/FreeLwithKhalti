@@ -121,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   const Text('Speciality:',style: TextStyle(
                                       fontSize: 20, fontFamily: 'OpenSans'),),
                                   //Divider(thickness: 5,color: Colors.lightBlueAccent,),
-                                  Text(speciality,style: TextStyle(
+                                  Text(speciality,style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'OpenSans'
                                   ),),
@@ -129,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   const Text('Achievement:',style: TextStyle(
                                       fontSize: 20, fontFamily: 'OpenSans'),),
                                  // Divider(thickness: 5,color: Colors.lightBlueAccent,),
-                                  Text(Achievement,style: TextStyle(
+                                  Text(Achievement,style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'OpenSans'
                                   ),),
@@ -137,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   const Text('Highest Education:',style: TextStyle(
                                       fontSize: 20, fontFamily: 'OpenSans'),),
                                  // Divider(thickness: 5,color: Colors.lightBlueAccent,),
-                                  Text(highedu,style: TextStyle(
+                                  Text(highedu,style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'OpenSans'
                                   ),),
@@ -145,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   const Text('Trainings:',style: TextStyle(
                                       fontSize: 20, fontFamily: 'OpenSans'),),
                                   // Divider(thickness: 5,color: Colors.lightBlueAccent,),
-                                  Text(Training,style: TextStyle(
+                                  Text(Training,style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'OpenSans'
                                   ),),
@@ -439,7 +439,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                   color: Colors.blueAccent,
                                                                   borderRadius:
                                                                   BorderRadius.circular(200),
-                                                                  image: DecorationImage(
+                                                                  image: const DecorationImage(
                                                                       fit: BoxFit.fill,
                                                                       image: AssetImage(
                                                                           'Assets/Logo/logomain.png'))),
@@ -493,7 +493,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                    ):CircularProgressIndicator();
+                    ):const CircularProgressIndicator();
                   //}
                   // return Container();
                   })),

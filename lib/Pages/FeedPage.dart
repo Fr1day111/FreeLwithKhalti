@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:projectfirst/FirebaseHelper/GetPost.dart';
+import 'package:projectfirst/Models/Posts.dart';
 import 'package:projectfirst/Pages/DetailPage.dart';
 
 class FeedPage extends StatefulWidget {
@@ -24,33 +26,33 @@ class _FeedPageState extends State<FeedPage> {
     }
   }
 
-  final Stream<QuerySnapshot> postsStream = FirebaseFirestore.instance
-      .collection("Posts")
-      .orderBy('TimeStamp', descending: false)
-      .snapshots();
+  // final Stream<QuerySnapshot> postsStream = FirebaseFirestore.instance
+  //     .collection("Posts")
+  //     .orderBy('TimeStamp', descending: false)
+  //     .snapshots();
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: postsStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    return FutureBuilder<List<Post>>(
+        future: getPosts(),
+        builder: (BuildContext context, snapshot) {
           if (snapshot.hasError) {}
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          final List storedocs = [];
-          snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map a = document.data() as Map<String, dynamic>;
-            storedocs.add(a);
-            a['id'] = document.id;
-          }).toList();
+          final List<Post>? storedocs = snapshot.data;
+          print(storedocs);
+          // if(storedocs!.isEmpty){
+          //   return Container();
+          // }
 
           return Scaffold(
             body: SingleChildScrollView(
               child: SafeArea(
                 child: Container(
+                  height: 1000,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -64,21 +66,24 @@ class _FeedPageState extends State<FeedPage> {
                       tileMode: TileMode.mirror,
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      for (var i = 0; i < storedocs.length; i++) ...[
-                        if (storedocs[i]['RequestStatus'] == 'Waiting') ...[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: ListView.builder(
+                    itemCount: storedocs!.length,
+                      itemBuilder: (context,index){
+                      Post post = storedocs[index];
+                        if (post.requestStatus == 'Waiting') {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5.0),
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DetailPage(
-                                            postid: storedocs[i]['id'],
-                                          )),
-                                );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                      builder: (context) =>
+                                      DetailPage(
+                                        postid: post.id,
+                                      )));
+
                               },
                               child: Card(
                                 elevation: 15,
@@ -91,34 +96,39 @@ class _FeedPageState extends State<FeedPage> {
                                     children: [
                                       const SizedBox(height: 10,),
                                       FutureBuilder<
-                                              DocumentSnapshot<
-                                                  Map<String, dynamic>>>(
+                                          DocumentSnapshot<
+                                              Map<String, dynamic>>>(
                                           future: FirebaseFirestore.instance
                                               .collection('Users')
-                                              .doc(storedocs[i]['UserId'])
+                                              .doc(post.userId)
                                               .get(),
                                           builder: (_, snapshot) {
-
-                                            if(snapshot.connectionState==ConnectionState.waiting){
-                                              return const Center(child: CircularProgressIndicator(),);
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const Center(
+                                                child: CircularProgressIndicator(),);
                                             }
                                             var data = snapshot.data!.data();
                                             var name = data!['UserName'];
                                             var pfpUrl =
                                             data['pfpUrl'].toString();
                                             return Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                                              padding: const EdgeInsets
+                                                  .symmetric(horizontal: 25.0),
                                               child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment
+                                                    .start,
                                                 children: [
                                                   pfpUrl == ' '
                                                       ? Container(
                                                     height: 50,
                                                     width: 50,
                                                     decoration: BoxDecoration(
-                                                        color: Colors.blueAccent,
+                                                        color: Colors
+                                                            .blueAccent,
                                                         borderRadius:
-                                                        BorderRadius.circular(200),
+                                                        BorderRadius.circular(
+                                                            200),
                                                         image: const DecorationImage(
                                                             fit: BoxFit.fill,
                                                             image: AssetImage(
@@ -128,40 +138,47 @@ class _FeedPageState extends State<FeedPage> {
                                                     height: 150,
                                                     width: 150,
                                                     decoration: BoxDecoration(
-                                                        color: Colors.blueAccent,
+                                                        color: Colors
+                                                            .blueAccent,
                                                         borderRadius:
-                                                        BorderRadius.circular(200),
+                                                        BorderRadius.circular(
+                                                            200),
                                                         image: DecorationImage(
                                                           fit: BoxFit.fill,
-                                                          image: NetworkImage(pfpUrl),
+                                                          image: NetworkImage(
+                                                              pfpUrl),
                                                         )),
                                                   ),
                                                   const SizedBox(width: 20,),
-                                                  Text(name,style: const TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontFamily: 'OpenSans',
-                                                      fontSize:25),),
+                                                  Text(name,
+                                                    style: const TextStyle(
+                                                        fontWeight: FontWeight
+                                                            .bold,
+                                                        fontFamily: 'OpenSans',
+                                                        fontSize: 25),),
                                                 ],
                                               ),
                                             );
                                           }),
                                       const Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 25.0),
-                                        child: Divider(thickness: 5,color: Colors.lightBlueAccent,),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 25.0),
+                                        child: Divider(thickness: 5,
+                                          color: Colors.lightBlueAccent,),
                                       ),
                                       Text(
-                                        'Job Title:'+storedocs[i]['Title'],
+                                        'Job Title:' + post.title,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'OpenSans',
-                                            fontSize:15),
+                                            fontSize: 15),
                                       ),
                                       const Text(
                                         'Job Description:',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'OpenSans',
-                                            fontSize:15),
+                                            fontSize: 15),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -171,7 +188,7 @@ class _FeedPageState extends State<FeedPage> {
                                           width: double.infinity,
                                           color: Colors.white,
                                           child: Text(
-                                            storedocs[i]['Description'],
+                                          post.description,
                                             style: const TextStyle(
                                                 fontFamily: 'OpenSans'),
                                             textAlign: TextAlign.center,
@@ -183,17 +200,17 @@ class _FeedPageState extends State<FeedPage> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'OpenSans',
-                                            fontSize:15),
+                                            fontSize: 15),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10),
                                         child: Container(
-                                         // height: 100,
+                                          // height: 100,
                                           width: double.infinity,
                                           color: Colors.white,
                                           child: Text(
-                                            storedocs[i]['Requirement'],
+                                            post.requirement,
                                             style: const TextStyle(
                                                 fontFamily: 'OpenSans'),
                                           ),
@@ -217,13 +234,14 @@ class _FeedPageState extends State<FeedPage> {
                                                   fontSize: 15),
                                               children: <TextSpan>[
                                                 TextSpan(
-                                                    text:'Rs.'+ storedocs[i]['Budget']
-                                                        .toString(),
+                                                    text: 'Rs.' +
+                                                        post.budget
+                                                            .toString(),
                                                     style: const TextStyle(
                                                         fontWeight:
-                                                            FontWeight.bold,
+                                                        FontWeight.bold,
                                                         color:
-                                                            Colors.red)),
+                                                        Colors.red)),
                                               ],
                                             ),
                                           ),
@@ -244,13 +262,13 @@ class _FeedPageState extends State<FeedPage> {
                                                   fontSize: 15),
                                               children: <TextSpan>[
                                                 TextSpan(
-                                                    text: storedocs[i]['Deadline']
+                                                    text: post.deadline
                                                         .toString(),
                                                     style: const TextStyle(
                                                         fontWeight:
-                                                            FontWeight.bold,
+                                                        FontWeight.bold,
                                                         color:
-                                                            Colors.redAccent)),
+                                                        Colors.redAccent)),
                                               ],
                                             ),
                                           ),
@@ -262,7 +280,7 @@ class _FeedPageState extends State<FeedPage> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Catagory:${storedocs[i]['Type']}',
+                                            'Catagory:${post.type}',
                                             style: const TextStyle(
                                                 fontFamily: 'OpenSans',
                                                 fontSize: 15,
@@ -278,11 +296,17 @@ class _FeedPageState extends State<FeedPage> {
                                 ),
                               ),
                             ),
-                          ),
-                        ]
-                      ]
-                    ],
-                  ),
+                          );
+                        }
+                    return Container();
+                  })
+                  // Column(
+                  //   children: [
+                  //     for (var i = 0; i < storedocs.length; i++) ...[
+                  //
+                  //     ]
+                  //   ],
+                  // ),
                 ),
               ),
             ),
